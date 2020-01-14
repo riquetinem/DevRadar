@@ -9,7 +9,7 @@ mongoose.connect('mongodb+srv://tinem:shinhate123@cluster0-wkcyj.mongodb.net/wee
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
-mongoose.set('useCreateIndex', true)
+mongoose.set('useCreateIndex', true);
 
 app.use(express.json());
 app.use(routes);
