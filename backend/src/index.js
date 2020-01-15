@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const routes = require('./routes');
 
@@ -11,6 +12,7 @@ mongoose.connect('mongodb+srv://tinem:shinhate123@cluster0-wkcyj.mongodb.net/wee
 });
 mongoose.set('useCreateIndex', true);
 
+app.use(cors())
 app.use(express.json());
 app.use(routes);
 
