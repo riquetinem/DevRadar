@@ -4,6 +4,8 @@ import MapView, {Marker, Callout} from 'react-native-maps'
 import {requestPermissionsAsync, getCurrentPositionAsync} from 'expo-location';
 import {MaterialIcons} from '@expo/vector-icons';
 
+import KeyboardShift from '../utils/KeyboardShift';
+
 import api from '../services/api';
 
 function Main({ navigation }) {
@@ -57,8 +59,10 @@ function Main({ navigation }) {
   }
 
   return (
-    <>
-      <MapView onRegionChangeComplete={handleRegionChanged} style={styles.map} initialRegion={currentRegion}>
+    <KeyboardShift>
+    {() => (
+      <>
+            <MapView onRegionChangeComplete={handleRegionChanged} style={styles.map} initialRegion={currentRegion}>
         {devs.map(dev => (
           <Marker key={dev._id} coordinate={{latitude: dev.location.coordinates[1], longitude: dev.location.coordinates[0]}} >
           <Image style={styles.avatar} source={{ uri: dev.avatar_url }} />
@@ -75,22 +79,25 @@ function Main({ navigation }) {
         </Marker>
         ))}
       </MapView>
-      <View style={styles.searchForm}>
-        <TextInput
-         style={styles.searchInput} 
-         placeholder="Buscar devs por techs..."
-         placeholderTextColor="#999"
-         autoCapitalize="words"
-         autoCorrect={false}
-         value={techs}
-         onChangeText={setTechs}
-         />
 
-         <TouchableOpacity style={styles.loadButton} onPress={loadDevs} >
-           <MaterialIcons name="my-location" size={20} color="#FFF" />
-         </TouchableOpacity>
-      </View>
-    </>
+<View style={styles.searchForm}>
+<TextInput
+ style={styles.searchInput} 
+ placeholder="Buscar devs por techs..."
+ placeholderTextColor="#999"
+ autoCapitalize="words"
+ autoCorrect={false}
+ value={techs}
+ onChangeText={setTechs}
+ />
+
+ <TouchableOpacity style={styles.loadButton} onPress={loadDevs} >
+   <MaterialIcons name="my-location" size={20} color="#FFF" />
+ </TouchableOpacity>
+</View>
+      </>
+    )}
+  </KeyboardShift>
   )
 }
 
@@ -125,7 +132,7 @@ const styles = StyleSheet.create({
 
   searchForm: {
     position: 'absolute',
-    top: 20,
+    bottom: 20,
     left: 20,
     right: 20,
     zIndex: 5,
